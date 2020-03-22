@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.GraphResponse
@@ -38,8 +39,7 @@ class MainListActivity : AppCompatActivity() {
 
                         response?.let {
                             val facebook = Gson().fromJson(it.rawResponse, Facebook::class.java)
-                            list_recyclerview.adapter = FaceBookListAdapter(facebook.facebookDatas)
-                            list_recyclerview.layoutManager = LinearLayoutManager(baseContext)
+                            list_recyclerview.adapter = FaceBookListAdapter(facebook.facebookDatas, Glide.with(this@MainListActivity))
                         }
 
                     }
