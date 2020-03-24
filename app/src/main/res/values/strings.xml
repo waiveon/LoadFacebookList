@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">KakaoPay</string>
+    <string name="refresh">Refresh</string>
     <string name="facebook_app_id">1556379761203984</string>
     <string name="facebook_page_id">109541750684095</string>
     <string name="facebook_access_token">EAADWQ5xdQrsBAL9fZBnuQntEZBstTDrsZAtwhE53q3hWZApbiwudAQ5C8YGh0Q3wTHA3ifyUpcAKCgoE8ri9rhH47rBbnP5T7KeQ7PYYrvJychIgW60wpDM96hvHL6nSKsBwD4xJu8DKZAJZBnkmgQTEa2bWjak3DOjsLrbCqM2QZDZD</string>

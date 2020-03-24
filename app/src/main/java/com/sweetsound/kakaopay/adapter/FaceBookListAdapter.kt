@@ -17,15 +17,17 @@ import com.sweetsound.kakaopay.ui.DetailActivity
 import com.sweetsound.kakaopay.ui.DetailActivity.Companion.MODEL
 
 
-class FaceBookListAdapter(private val faceBookDatas: List<FacebookData>, val glideRequestManager: RequestManager) : RecyclerView.Adapter<FaceBookListAdapter.ItemViewHolder>() {
+class FaceBookListAdapter(val glideRequestManager: RequestManager) : RecyclerView.Adapter<FaceBookListAdapter.ItemViewHolder>() {
+    var items: List<FacebookData> = emptyList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.activity_main_list_item, parent, false))
     }
 
-    override fun getItemCount() = faceBookDatas.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(faceBookDatas[position])
+        holder.bind(items[position])
     }
 
     inner class ItemViewHolder(private val binding: ActivityMainListItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -48,31 +50,4 @@ class FaceBookListAdapter(private val faceBookDatas: List<FacebookData>, val gli
             }
         }
     }
-
-//    inner class ItemViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-//            LayoutInflater.from(parent.context).inflate(R.layout.activity_main_list_item, parent, false)) {
-//        fun bind(data: FacebookData) {
-//            Log.e("TAG", "LJS== data : " + data)
-//            val intent = Intent(itemView.getContext(), DetailActivity::class.java)
-//
-//            intent.putExtra(IMAGE_URL, data.attachments.attachmentDatas[0].media?.let {
-//                itemView.attach_imageview.visibility = View.VISIBLE
-//                itemView.attach_imageview.loadUrl(glideRequestManager, it.image.src)
-//
-//                it.image.src
-//            } ?: "")
-//
-//            intent.putExtra(MESSAGE, data.message?.let {
-//                itemView.message_textview.text = it
-//                it
-//            } ?: "")
-//
-//            itemView.date_textview.text = data.createTime
-//
-//            itemView.setOnClickListener {
-//                intent.putExtra(CREATE_TIME, data.createTime)
-//                it.context.startActivity(intent)
-//            }
-//        }
-//    }
 }
