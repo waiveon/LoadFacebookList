@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="model"
-            type="com.sweetsound.kakaopay.databinding.FacebookModel"/>
+            name="facebookViewModel"
+            type="com.sweetsound.kakaopay.databinding.FacebookViewModel"/>
 
         <variable
             name="requestManager"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:image_url="@{model.imageUrl}"
+            app:image_url="@{facebookViewModel.imageUrl}"
             app:requestManager="@{requestManager}"/>
 
         <TextView
@@ -37,7 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="@{model.message}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{facebookViewModel.message}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/date_textview"
             app:layout_constraintLeft_toRightOf="@id/attach_imageview"/>
@@ -47,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="@{model.createTime}"
+            android:text="@{facebookViewModel.createTime}"
             app:layout_constraintTop_toBottomOf="@id/message_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/attach_imageview"/>

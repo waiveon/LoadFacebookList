@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class FacebookModel(
+data class FacebookViewModel(
         val message: String,
         val createTime: String,
         val imageUrl: String

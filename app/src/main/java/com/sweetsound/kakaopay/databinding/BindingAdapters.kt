@@ -1,8 +1,10 @@
 package com.sweetsound.kakaopay.databinding
 
 import android.app.Activity
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.sweetsound.kakaopay.Utils.loadUrl
@@ -20,13 +22,21 @@ fun loadImage(imageView: ImageView, glideRequestManager: RequestManager, url: St
 }
 
 @BindingAdapter("list_item")
-fun setListItem(recyclerView: RecyclerView, facebookItems: List<FacebookData>) {
-//    (recyclerView.adapter as? FaceBookListAdapter)?.let {
-//        it.items = facebookItems
-//        it.notifyDataSetChanged()
+//fun setListItem(recyclerView: RecyclerView, facebookItems: List<FacebookData>) {
+////    (recyclerView.adapter as? FaceBookListAdapter)?.let {
+////        it.items = facebookItems
+////        it.notifyDataSetChanged()
+////    }
+//    (recyclerView.adapter as FaceBookListAdapter).apply {
+//        items = facebookItems
+//        notifyDataSetChanged()
 //    }
+//}
+fun setListItem(recyclerView: RecyclerView, facebookItems: LiveData<MutableList<FacebookData>>) {
     (recyclerView.adapter as FaceBookListAdapter).apply {
-        items = facebookItems
+        facebookItems.value?.let {
+            items = it
+        }
         notifyDataSetChanged()
     }
 }

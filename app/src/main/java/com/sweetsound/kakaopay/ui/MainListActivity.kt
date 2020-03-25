@@ -3,7 +3,7 @@ package com.sweetsound.kakaopay.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
@@ -17,46 +17,53 @@ import com.sweetsound.kakaopay.adapter.FaceBookListAdapter
 import com.sweetsound.kakaopay.data.Facebook
 import com.sweetsound.kakaopay.databinding.ActivityMainListBinding
 import com.sweetsound.kakaopay.databinding.FacebookItemsModel
+import com.sweetsound.kakaopay.databinding.FacebookItemsViewModel
+import com.sweetsound.kakaopay.net.FacebookRetrofit
+import kotlinx.android.synthetic.main.abc_popup_menu_item_layout.*
 import kotlinx.android.synthetic.main.activity_main_list.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainListActivity : AppCompatActivity() {
-    val mFacebookItemsModel = FacebookItemsModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val facebookItemsViewModel = FacebookItemsViewModel(this)
+
         val binding: ActivityMainListBinding = DataBindingUtil.setContentView(this, R.layout.activity_main_list)
-        binding.facebookItemsModel = mFacebookItemsModel
-        binding.activity = this
+        binding.facebookItemsViewModel = facebookItemsViewModel
+        binding.setLifecycleOwner(this)
 
         list_recyclerview.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         list_recyclerview.adapter = FaceBookListAdapter(Glide.with(this@MainListActivity))
 
-        loadFacebookList()
-    }
+        FacebookItemsModel().also {facebookItemsModel ->
+            facebookItemsModel.setFacebookAccessToken(getString(R.string.facebook_access_token))
+            facebookItemsModel.setQueryFields("attachments,message,created_time")
 
-    fun loadFacebookList() {
-        val parameters = Bundle()
-        parameters.putString("fields", "attachments,message,created_time")
+            with(facebookItemsViewModel) {
+                setModel(facebookItemsModel)
+                loadFacebookList()
+            }
+        }
 
-        val accessToken = AccessToken(getString(R.string.facebook_access_token), getString(R.string.facebook_app_id), "1556379761203984", null, null, null, null, null)
 
-        val graphRequest = GraphRequest(accessToken,
-                "/${accessToken.getUserId()}/feed",
-                null,
-                HttpMethod.GET,
-                object : GraphRequest.Callback {
-                    override fun onCompleted(response: GraphResponse?) {
-                        response?.let {
-                            Gson().fromJson(it.rawResponse, Facebook::class.java).apply {
-                                mFacebookItemsModel.facebookItems.clear()
-                                mFacebookItemsModel.facebookItems.addAll(facebookDatas)
-                            }
-                        }
-                    }
-                })
+//        with(FacebookItemsModel()) {facebookItemsModel ->
+//            setFacebookAccessToken(getString(R.string.facebook_access_token))
+//            setQueryFields("attachments,message,created_time")
+//
+//            with(facebookItemsViewModel) {
+//                setModel()
+//            }
+//        }
 
-        graphRequest.parameters = parameters
-        graphRequest.executeAsync()
+
+
+//        with(facebookItemsViewModel) {
+//            setFacebookAccessToken(getString(R.string.facebook_access_token))
+//            setQueryFields("attachments,message,created_time")
+//            loadFacebookList()
+//        }
     }
 }
